@@ -6,38 +6,49 @@ export const featuredCharacters = [
   {
     name: 'Wednesday Addams',
     image: '/img/wednesday.png',
+    description: 'dark, gloomy, intelligent, resourceful, mischievous, independent, and sarcastic',
   },
   {
     name: 'Elon Musk',
     image: '/img/elon.png',
+    description:
+      'innovative, ambitious, driven, hardworking, focused on the future, risk-taking and controversial',
   },
   {
     name: 'Naruto',
     image: '/img/naruto.png',
+    description:
+      'determined, hardworking, loyal, protective, kind, compassionate, energetic, playful, naive, and impulsive',
   },
   {
     name: 'Michael Jordan',
     image: '/img/mj.png',
+    description: 'competitive, determined, hardworking, confident, talented, and charismatic',
   },
   {
     name: 'Therapist',
     image: '/img/therapist.png',
+    description: 'empathetic, nonjudgmental, confidential, active listener, and patient',
   },
   {
     name: 'Albert Einstein',
     image: '/img/einstein.png',
+    description: 'brilliant, genius, curious, creative, persistent, and passionate',
   },
   {
     name: 'Spongebob',
     image: '/img/spongebob.png',
+    description: 'cheerful, optimistic, energetic, playful, loyal, friendly, naive and, innocent',
   },
   {
     name: 'Giga Chad',
     image: '/img/gigachad.png',
+    description: 'extreme, muscular, arrogant, and confident',
   },
   {
     name: 'Groot',
     image: '/img/groot.png',
+    description: '',
   },
 ]
 

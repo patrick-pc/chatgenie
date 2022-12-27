@@ -28,7 +28,11 @@ export default function Character() {
     const myMessage = {
       sender: 'Guest',
       message: message,
+      description: '',
     }
+    featuredCharacters.map((character) => {
+      if (character.name === name) myMessage.description = character.description
+    })
     setConversation([...conversation, myMessage])
 
     setTimeout(async () => {
@@ -39,7 +43,7 @@ export default function Character() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name, message }),
+        body: JSON.stringify({ name, message, description: myMessage.description, conversation }),
       })
 
       const data = await response.json()
