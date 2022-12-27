@@ -8,14 +8,14 @@ const openai = new OpenAIApi(
 )
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const basePromptPrefix = `This is a conversation with ${req.body.character}\n`
+  const basePromptPrefix = `This is a conversation with ${req.body.name}.\n`
 
   console.log(`API: ${basePromptPrefix}${req.body.message}`)
 
   const baseCompletion = await openai.createCompletion({
     model: 'text-davinci-003',
     prompt: `${basePromptPrefix}${req.body.message}\n`,
-    temperature: 0.6,
+    temperature: 0.7,
     max_tokens: 256,
   })
 
