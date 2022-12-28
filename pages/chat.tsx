@@ -24,6 +24,8 @@ export default function Character() {
   }, [characterMessage])
 
   const sendMessage = async () => {
+    if (!message) return
+
     setMessage('')
     const myMessage = {
       sender: 'Guest',
@@ -51,7 +53,7 @@ export default function Character() {
 
       setCharacterMessage({
         sender: name,
-        message: output.text,
+        message: output.text.trim(),
       })
       setIsGenerating(false)
     }, 800)
@@ -70,10 +72,10 @@ export default function Character() {
         <div className="flex h-screen w-full flex-col items-center justify-start gap-4 px-6">
           <div className="flex w-full max-w-md items-center justify-between">
             <div className="flex items-center gap-2">
-              {featuredCharacters.map((character) => {
+              {featuredCharacters.map((character, i) => {
                 return (
                   character.name === name && (
-                    <img className="h-10 w-10 rounded-full" src={character.image} />
+                    <img className="h-10 w-10 rounded-full" src={character.image} key={i} />
                   )
                 )
               })}
@@ -92,12 +94,12 @@ export default function Character() {
                       className={`flex items-center p-2 ${
                         conv.sender === 'Guest' ? 'justify-end' : 'justify-start'
                       }`}
+                      key={i}
                     >
                       <div
                         className={`max-w-[18rem] rounded-2xl p-4 ${
                           conv.sender === 'Guest' ? 'bg-indigo-400' : 'bg-[#212325]'
                         }`}
-                        key={i}
                       >
                         <p className="text-sm md:text-base">{conv.message}</p>
                       </div>

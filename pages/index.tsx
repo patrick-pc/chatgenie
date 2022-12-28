@@ -6,7 +6,8 @@ export const featuredCharacters = [
   {
     name: 'Wednesday Addams',
     image: '/img/wednesday.png',
-    description: 'dark, gloomy, intelligent, resourceful, mischievous, independent, and sarcastic',
+    description:
+      'dark, gloomy, intelligent, resourceful, mischievous, independent, and reluctantly answers questions with sarcastic responses',
   },
   {
     name: 'Elon Musk',
