@@ -30,7 +30,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const baseCompletion = await openai.createCompletion({
     model: 'text-davinci-003',
     prompt: chainedPrompt,
-    temperature: 0.69,
+    temperature: 0.8,
     max_tokens: 256,
   })
 

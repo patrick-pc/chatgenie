@@ -1,13 +1,12 @@
 import { DotPulse } from '@uiball/loaders'
-import { featuredCharacters } from '.'
-import { InformationCircleIcon, PaperAirplaneIcon } from '@heroicons/react/24/outline'
+import { ShareIcon, PaperAirplaneIcon } from '@heroicons/react/24/outline'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 
 export default function Character() {
   const router = useRouter()
-  const { name } = router.query
+  const { name, description, image } = router.query
 
   const [message, setMessage] = useState('')
   const [conversation, setConversation] = useState([] as any)
@@ -32,9 +31,6 @@ export default function Character() {
       message: message,
       description: '',
     }
-    featuredCharacters.map((character) => {
-      if (character.name === name) myMessage.description = character.description
-    })
     setConversation([...conversation, myMessage])
 
     setTimeout(async () => {
@@ -45,7 +41,7 @@ export default function Character() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name, message, description: myMessage.description, conversation }),
+        body: JSON.stringify({ name, message, description, conversation }),
       })
 
       const data = await response.json()
@@ -68,21 +64,22 @@ export default function Character() {
         <link rel="icon" href="/img/logo.svg" />
       </Head>
 
-      <main className="container mx-auto mt-6 mb-16 md:mt-16">
-        <div className="flex h-screen w-full flex-col items-center justify-start gap-4 px-6">
+      <main className="container mx-auto pt-6 pb-16 md:pt-16">
+        <div className="flex h-full w-full flex-col items-center justify-start gap-4 px-6">
           <div className="flex w-full max-w-md items-center justify-between">
             <div className="flex items-center gap-2">
-              {featuredCharacters.map((character, i) => {
-                return (
-                  character.name === name && (
-                    <img className="h-10 w-10 rounded-full" src={character.image} key={i} />
-                  )
-                )
-              })}
+              <img
+                className="h-10 w-10 flex-shrink-0 rounded-full object-cover"
+                src={image ? (image as string) : '/img/placeholder.png'}
+                onError={({ currentTarget }) => {
+                  currentTarget.onerror = null
+                  currentTarget.src = '/img/placeholder.png'
+                }}
+              />
               <p className="font-medium">{name}</p>
             </div>
             <button>
-              <InformationCircleIcon className="h-6 w-6 stroke-2" />
+              <ShareIcon className="h-5 w-5 stroke-2" />
             </button>
           </div>
           <div className="flex h-[500px] w-full max-w-md flex-col items-center justify-end gap-4 rounded-2xl border border-[#212325] p-4">
