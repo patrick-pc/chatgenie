@@ -1,8 +1,9 @@
+import { ChevronLeftIcon, ShareIcon, PaperAirplaneIcon } from '@heroicons/react/24/outline'
 import { DotPulse } from '@uiball/loaders'
-import { ShareIcon, PaperAirplaneIcon } from '@heroicons/react/24/outline'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
+import Link from 'next/link'
 
 export default function Character() {
   const router = useRouter()
@@ -67,6 +68,9 @@ export default function Character() {
       <main className="container mx-auto pt-6 pb-16 md:pt-16">
         <div className="flex h-full w-full flex-col items-center justify-start gap-4 px-6">
           <div className="flex w-full max-w-md items-center justify-between">
+            <Link href="/">
+              <ChevronLeftIcon className="h-6 w-6 cursor-pointer stroke-2" />
+            </Link>
             <div className="flex items-center gap-2">
               <img
                 className="h-10 w-10 flex-shrink-0 rounded-full object-cover"
