@@ -16,6 +16,21 @@ export default function Document() {
       <meta name="twitter:image" content="https://chatgenie.xyz/img/og-image.png" />
 
       <meta name="theme-color" content="#131517" />
+
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-3J2BJVNJHF"></script>
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+            
+              gtag('config', 'G-3J2BJVNJHF', {
+                page_path: window.location.pathname
+              });
+            `,
+        }}
+      />
       <Head />
       <body>
         <Main />
