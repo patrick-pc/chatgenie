@@ -76,18 +76,18 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>switcheroo</title>
-        <meta name="description" content="Have a conversation with your favorite character" />
+        <title>ChatGenie</title>
+        <meta name="description" content="Talk to any character." />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-        <link rel="icon" href="/img/logo.svg" />
+        <link rel="icon" href="/img/logo-160x160.svg" />
       </Head>
 
       <Navbar />
-      <main className="container mx-auto pt-6 pb-16 md:pt-16">
+      <main className="container mx-auto pt-6 pb-32 md:pt-16">
         <div className="flex h-full w-full flex-col items-center gap-24 px-6">
           <div className="flex w-full max-w-2xl flex-col items-center justify-center gap-8 text-center">
             <a
-              href="https://twitter.com/switcheroo_ai"
+              href="https://twitter.com/chatgenie"
               target="_blank"
               className="flex items-center justify-center gap-2 rounded-full border-[.5px] border-zinc-600 bg-[#93959711] py-1 px-4 text-sm"
             >
@@ -95,13 +95,13 @@ export default function Home() {
               <ArrowLongRightIcon className="h-5 w-5" />
             </a>
             <div className="flex flex-col gap-2">
-              <h1 className="text-5xl font-medium md:text-7xl">switcheroo.ai</h1>
+              <h1 className="text-5xl font-medium md:text-7xl">ChatGenie</h1>
               <h3 className="text-lg font-extralight text-zinc-400 md:text-xl">
                 Have a conversation with any character
               </h3>
             </div>
             <button
-              className="mt-4 rounded-lg border border-indigo-300 bg-indigo-600/10 px-6 py-3 text-indigo-300"
+              className="mt-4 rounded-lg border border-indigo-300 bg-indigo-600/10 px-6 py-3 text-indigo-400 transition"
               onClick={() => setIsActive(true)}
             >
               Create Character
