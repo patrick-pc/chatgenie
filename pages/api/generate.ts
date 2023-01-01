@@ -11,7 +11,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const { name, description, message, conversation } = req.body
 
   let basePrompt = `The following is a conversation with ${name}.${
-    description && ` ${name} is ${description}.`
+    description &&
+    ` ${name} is ${description}.
+    
+    Instructions:
+    - Keep the replies short and concise.
+    - Retain as much information as needed to answer the question at a later time.
+    `
   }\n`
   let chainedPrompt = ''
 
@@ -26,7 +32,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     })
   }
 
-  console.log(`GPT-3: ${chainedPrompt}`)
+  console.log(chainedPrompt)
   const baseCompletion = await openai.createCompletion({
     model: 'text-davinci-003',
     prompt: chainedPrompt,
