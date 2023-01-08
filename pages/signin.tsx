@@ -22,6 +22,21 @@ export default function Login() {
     }
   }
 
+  const signInWithGoogle = async () => {
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+    })
+
+    if (error) {
+      console.log({ error })
+    } else {
+      const { error } = await supabase.auth.updateUser({ email })
+
+      if (error) console.log({ error })
+      setSubmitted(true)
+    }
+  }
+
   if (submitted) {
     return (
       <div>
@@ -31,7 +46,7 @@ export default function Login() {
   }
 
   return (
-    <div className="flex h-screen w-full flex-col items-center justify-center gap-4">
+    <div className="flex h-screen w-full flex-col items-center justify-center gap-4 px-6">
       <input
         className="w-full max-w-sm rounded-lg border-2 border-[#313335] bg-transparent py-2 px-4 text-sm placeholder-zinc-500 focus:border-indigo-400 focus:outline-none"
         onChange={(e) => setEmail(e.target.value)}
@@ -41,6 +56,13 @@ export default function Login() {
         onClick={() => signIn()}
       >
         Sign In
+      </button>
+      <p className="my-2">OR</p>
+      <button
+        className="w-full max-w-sm rounded-lg bg-[#313335] px-4 py-2 transition hover:bg-[#414345] disabled:bg-[#313335] disabled:opacity-50"
+        onClick={() => signInWithGoogle()}
+      >
+        Sign In With Google
       </button>
     </div>
   )
