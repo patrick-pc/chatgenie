@@ -1,4 +1,5 @@
 import '../styles/globals.css'
+import { Analytics } from '@vercel/analytics/react'
 import { CharactersProvider } from '../contexts/characters'
 import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs'
 import { Session, SessionContextProvider } from '@supabase/auth-helpers-react'
@@ -15,7 +16,10 @@ export default function App({
 
   return (
     <SessionContextProvider supabaseClient={supabase} initialSession={pageProps.initialSession}>
-      <Component {...pageProps} />
+      <CharactersProvider>
+        <Component {...pageProps} />
+        <Analytics />
+      </CharactersProvider>
     </SessionContextProvider>
   )
 }
