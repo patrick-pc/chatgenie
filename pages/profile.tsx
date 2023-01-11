@@ -87,7 +87,7 @@ export default function Profile() {
           </div>
 
           <div className="flex w-full flex-col items-center justify-center gap-8">
-            {!profile.avatar_url ? (
+            {profile.avatar_url ? (
               <img className="h-28 w-28 rounded-full" src={profile.avatar_url} />
             ) : (
               <Avatar

@@ -9,52 +9,6 @@ import Link from 'next/link'
 import Modal from '../components/Modal'
 import Navbar from '../components/Navbar'
 
-// export const featuredCharacters = [
-//   {
-//     name: 'Wednesday Addams',
-//     image: '/img/wednesday.png',
-//     description:
-//       'dark, gloomy, intelligent, resourceful, mischievous, independent, and reluctantly answers questions with sarcastic responses',
-//   },
-//   {
-//     name: 'Elon Musk',
-//     image: '/img/elon.png',
-//     description:
-//       'innovative, ambitious, driven, hardworking, focused on the future, risk-taking and controversial',
-//   },
-//   {
-//     name: 'Naruto',
-//     image: '/img/naruto.png',
-//     description:
-//       'determined, hardworking, loyal, protective, kind, compassionate, energetic, playful, naive, and impulsive',
-//   },
-//   {
-//     name: 'Michael Jordan',
-//     image: '/img/mj.png',
-//     description: 'competitive, determined, hardworking, confident, talented, and charismatic',
-//   },
-//   {
-//     name: 'Therapist',
-//     image: '/img/therapist.png',
-//     description: 'empathetic, nonjudgmental, confidential, active listener, and patient',
-//   },
-//   {
-//     name: 'Albert Einstein',
-//     image: '/img/einstein.png',
-//     description: 'brilliant, genius, curious, creative, persistent, and passionate',
-//   },
-//   {
-//     name: 'Spongebob',
-//     image: '/img/spongebob.png',
-//     description: 'cheerful, optimistic, energetic, playful, loyal, friendly, naive and, innocent',
-//   },
-//   {
-//     name: 'Giga Chad',
-//     image: '/img/gigachad.png',
-//     description: 'extreme, muscular, arrogant, and confident',
-//   },
-// ]
-
 export default function Home() {
   const router = useRouter()
   const supabase = useSupabaseClient()
@@ -161,7 +115,6 @@ export default function Home() {
       })
 
       const data = await response.json()
-      console.log(data)
       setFeaturedCharacters(data)
     } catch (error) {
       console.log(error)
