@@ -19,17 +19,14 @@ export default function Profile() {
   })
   const [isLoading, setIsLoading] = useState(false)
 
-  console.log(user)
   useEffect(() => {
     if (!user) return
-    console.log(user)
     getProfile()
   }, [user])
 
   const getProfile = async () => {
+    setIsLoading(true)
     try {
-      setIsLoading(true)
-
       const { data, error, status } = await supabase
         .from('profiles')
         .select('name, username, avatar_url')

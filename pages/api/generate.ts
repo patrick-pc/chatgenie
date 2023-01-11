@@ -28,7 +28,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     conversation.map((conv: any, i: number) => {
       chainedPrompt += `\n${conv.sender}: ${conv.message}`
 
-      if (conversation.length === i + 1) chainedPrompt += `\nGuest: ${message}\n${name}: `
+      if (conversation.length === i + 1) chainedPrompt += `\nMe: ${message}\n${name}: `
     })
   }
 

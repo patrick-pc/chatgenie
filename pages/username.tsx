@@ -22,7 +22,7 @@ export default function Username() {
     try {
       const { data, error } = await supabase
         .from('profiles')
-        .update({ username })
+        .update({ username, updated_at: new Date().toISOString() })
         .eq('id', user.id)
         .single()
 

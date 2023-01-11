@@ -1,77 +1,170 @@
 import { ArrowLongRightIcon } from '@heroicons/react/24/outline'
-import { useCharactersContext } from '../contexts/characters'
-import { useState } from 'react'
+import { toast } from 'react-hot-toast'
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
+import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react'
 import Head from 'next/head'
 import Link from 'next/link'
 import Modal from '../components/Modal'
 import Navbar from '../components/Navbar'
-import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs'
 
-export const featuredCharacters = [
-  {
-    name: 'Wednesday Addams',
-    image: '/img/wednesday.png',
-    description:
-      'dark, gloomy, intelligent, resourceful, mischievous, independent, and reluctantly answers questions with sarcastic responses',
-  },
-  {
-    name: 'Elon Musk',
-    image: '/img/elon.png',
-    description:
-      'innovative, ambitious, driven, hardworking, focused on the future, risk-taking and controversial',
-  },
-  {
-    name: 'Naruto',
-    image: '/img/naruto.png',
-    description:
-      'determined, hardworking, loyal, protective, kind, compassionate, energetic, playful, naive, and impulsive',
-  },
-  {
-    name: 'Michael Jordan',
-    image: '/img/mj.png',
-    description: 'competitive, determined, hardworking, confident, talented, and charismatic',
-  },
-  {
-    name: 'Therapist',
-    image: '/img/therapist.png',
-    description: 'empathetic, nonjudgmental, confidential, active listener, and patient',
-  },
-  {
-    name: 'Albert Einstein',
-    image: '/img/einstein.png',
-    description: 'brilliant, genius, curious, creative, persistent, and passionate',
-  },
-  {
-    name: 'Spongebob',
-    image: '/img/spongebob.png',
-    description: 'cheerful, optimistic, energetic, playful, loyal, friendly, naive and, innocent',
-  },
-  {
-    name: 'Giga Chad',
-    image: '/img/gigachad.png',
-    description: 'extreme, muscular, arrogant, and confident',
-  },
-]
+// export const featuredCharacters = [
+//   {
+//     name: 'Wednesday Addams',
+//     image: '/img/wednesday.png',
+//     description:
+//       'dark, gloomy, intelligent, resourceful, mischievous, independent, and reluctantly answers questions with sarcastic responses',
+//   },
+//   {
+//     name: 'Elon Musk',
+//     image: '/img/elon.png',
+//     description:
+//       'innovative, ambitious, driven, hardworking, focused on the future, risk-taking and controversial',
+//   },
+//   {
+//     name: 'Naruto',
+//     image: '/img/naruto.png',
+//     description:
+//       'determined, hardworking, loyal, protective, kind, compassionate, energetic, playful, naive, and impulsive',
+//   },
+//   {
+//     name: 'Michael Jordan',
+//     image: '/img/mj.png',
+//     description: 'competitive, determined, hardworking, confident, talented, and charismatic',
+//   },
+//   {
+//     name: 'Therapist',
+//     image: '/img/therapist.png',
+//     description: 'empathetic, nonjudgmental, confidential, active listener, and patient',
+//   },
+//   {
+//     name: 'Albert Einstein',
+//     image: '/img/einstein.png',
+//     description: 'brilliant, genius, curious, creative, persistent, and passionate',
+//   },
+//   {
+//     name: 'Spongebob',
+//     image: '/img/spongebob.png',
+//     description: 'cheerful, optimistic, energetic, playful, loyal, friendly, naive and, innocent',
+//   },
+//   {
+//     name: 'Giga Chad',
+//     image: '/img/gigachad.png',
+//     description: 'extreme, muscular, arrogant, and confident',
+//   },
+// ]
 
 export default function Home() {
+  const router = useRouter()
+  const supabase = useSupabaseClient()
+  const user = useUser()
+
   const [isActive, setIsActive] = useState(false)
   const [character, setCharacter] = useState({
     name: '',
+    visibility: 'public',
     description: '',
     image: '',
   })
-  const { characters, setCharacters } = useCharactersContext()
 
-  const createCharacter = () => {
+  const [featuredCharacters, setFeaturedCharacters] = useState([])
+  const [createdCharaters, setCreatedCharacters] = useState([])
+
+  const createCharacter = async () => {
+    if (!user) {
+      toast.error('Please login to continue.')
+      return
+    }
+
     if (!character.name) return
 
-    setCharacters([...characters, character])
+    const response = await fetch('/api/characters', {
+      method: 'POST',
+      body: JSON.stringify({ ...character, userId: user.id }),
+      headers: new Headers({
+        'content-type': 'application/json',
+      }),
+    })
+
+    const data = await response.json()
+    console.log(data)
+
     setIsActive(false)
     setCharacter({
       name: '',
+      visibility: 'public',
       description: '',
       image: '',
     })
+  }
+
+  useEffect(() => {
+    if (!user) return
+
+    getProfile()
+  }, [user])
+
+  const getProfile = async () => {
+    try {
+      if (user) {
+        const { data, error, status } = await supabase
+          .from('profiles')
+          .select('name, username, avatar_url')
+          .eq('id', user.id)
+          .single()
+
+        if (error && status !== 406) throw error
+
+        if (!data.username) {
+          router.push('/username')
+        }
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    if (!user) return
+
+    getCreatedCharacters()
+  }, [user, createdCharaters])
+
+  const getCreatedCharacters = async () => {
+    try {
+      const response = await fetch(`/api/characters?userId=${user.id}`, {
+        method: 'GET',
+        headers: new Headers({
+          'content-type': 'application/json',
+        }),
+      })
+
+      const data = await response.json()
+      setCreatedCharacters(data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    getFeaturedCharacters()
+  }, [])
+
+  const getFeaturedCharacters = async () => {
+    try {
+      const response = await fetch('/api/characters', {
+        method: 'GET',
+        headers: new Headers({
+          'content-type': 'application/json',
+        }),
+      })
+
+      const data = await response.json()
+      console.log(data)
+      setFeaturedCharacters(data)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
@@ -110,19 +203,19 @@ export default function Home() {
           </div>
 
           <div className="flex w-full max-w-2xl flex-col gap-12">
-            {characters?.length > 0 && (
+            {createdCharaters?.length > 0 && (
               <div className="flex flex-col gap-8">
                 <h3 className="text-xl font-medium">Created</h3>
                 <div className="grid grid-cols-2 place-items-center gap-8 md:grid-cols-3 lg:grid-cols-4">
-                  {characters.map((character: any, i: number) => {
+                  {createdCharaters.map((character: any, i: number) => {
                     return (
                       <Link
                         key={i}
-                        href={`/chat?name=${character.name}&description=${character.description}&image=${character.image}`}
+                        href={`/chat?characterId=${character.id}`}
                         className="flex flex-col items-center justify-center gap-2 text-center"
                       >
                         <img
-                          className="h-36 w-36 flex-shrink-0 rounded-full object-cover"
+                          className="squircle h-36 w-36 flex-shrink-0 object-cover"
                           src={character.image ? character.image : '/img/placeholder.png'}
                           onError={({ currentTarget }) => {
                             currentTarget.onerror = null
@@ -144,11 +237,11 @@ export default function Home() {
                   return (
                     <Link
                       key={i}
-                      href={`/chat?name=${character.name}&description=${character.description}&image=${character.image}`}
+                      href={`/chat?characterId=${character.id}`}
                       className="flex flex-col items-center justify-center gap-2 text-center"
                     >
                       <img
-                        className="h-36 w-36 flex-shrink-0 rounded-full object-cover"
+                        className="squircle h-36 w-36 flex-shrink-0 object-cover"
                         src={character.image}
                       />
                       <p className="text-sm font-medium text-zinc-400">{character.name}</p>
@@ -183,6 +276,17 @@ export default function Home() {
             />
           </div>
           <div className="flex w-full flex-col gap-1">
+            <label className="text-xs text-zinc-400">Visibility</label>
+            <select
+              className="w-full rounded-lg border-2 border-[#313335] bg-transparent py-2 px-4 text-sm placeholder-zinc-500 focus:border-indigo-400 focus:outline-none"
+              value={character.visibility}
+              onChange={(e) => setCharacter({ ...character, visibility: e.target.value })}
+            >
+              <option value="public">Public</option>
+              <option value="private">Private</option>
+            </select>
+          </div>
+          <div className="flex w-full flex-col gap-1">
             <label className="text-xs text-zinc-400">Description (optional)</label>
             <input
               className="w-full rounded-lg border-2 border-[#313335] bg-transparent py-2 px-4 text-sm placeholder-zinc-500 focus:border-indigo-400 focus:outline-none"
@@ -214,30 +318,4 @@ export default function Home() {
       </Modal>
     </>
   )
-}
-
-export const getServerSideProps = async (ctx) => {
-  const supabase = createServerSupabaseClient(ctx)
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
-
-  const { data, error, status } = await supabase
-    .from('profiles')
-    .select('id, username')
-    .eq('id', user.id)
-    .single()
-
-  if (error && status !== 406) throw error
-
-  if (!data.username) {
-    return {
-      redirect: {
-        destination: '/username',
-        permanent: false,
-      },
-    }
-  }
-
-  return { props: { user } }
 }
