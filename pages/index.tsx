@@ -5,6 +5,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import Modal from '../components/Modal'
 import Navbar from '../components/Navbar'
+import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs'
 
 export const featuredCharacters = [
   {
@@ -213,4 +214,30 @@ export default function Home() {
       </Modal>
     </>
   )
+}
+
+export const getServerSideProps = async (ctx) => {
+  const supabase = createServerSupabaseClient(ctx)
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+
+  const { data, error, status } = await supabase
+    .from('profiles')
+    .select('id, username')
+    .eq('id', user.id)
+    .single()
+
+  if (error && status !== 406) throw error
+
+  if (!data.username) {
+    return {
+      redirect: {
+        destination: '/username',
+        permanent: false,
+      },
+    }
+  }
+
+  return { props: { user } }
 }

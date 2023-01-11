@@ -1,4 +1,4 @@
-import { ChevronLeftIcon } from '@heroicons/react/24/outline'
+import { ChevronLeftIcon, PencilSquareIcon } from '@heroicons/react/24/outline'
 import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs'
 import { Orbit } from '@uiball/loaders'
 import { useEffect, useState } from 'react'
@@ -77,12 +77,15 @@ export default function Profile() {
       </Head>
 
       <main className="container mx-auto pt-6 pb-16 md:pt-16">
-        <div className="flex h-full w-full flex-col items-center justify-center gap-4 px-6">
+        <div className="flex h-full w-full flex-col items-center justify-center gap-8 px-6">
           <div className="flex w-full max-w-md items-center justify-between">
             <Link href="/">
               <ChevronLeftIcon className="h-6 w-6 cursor-pointer stroke-2" />
             </Link>
-            <button></button>
+            <h4 className="font-medium">Profile</h4>
+            <button className="invisible">
+              <PencilSquareIcon className="h-6 w-6 cursor-pointer stroke-2" />
+            </button>
           </div>
 
           <div className="flex w-full flex-col items-center justify-center gap-8">

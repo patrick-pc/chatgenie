@@ -1,5 +1,6 @@
-import Link from 'next/link'
+import { UserIcon } from '@heroicons/react/24/solid'
 import { useUser } from '@supabase/auth-helpers-react'
+import Link from 'next/link'
 
 const Navbar = () => {
   const user = useUser()
@@ -11,7 +12,7 @@ const Navbar = () => {
       </Link>
       {user ? (
         <Link href="/profile">
-          <button>Profile</button>
+          <UserIcon className="h-6 w-6" />
         </Link>
       ) : (
         <Link href="/signin">
