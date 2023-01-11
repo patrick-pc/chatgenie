@@ -287,14 +287,26 @@ export default function Home() {
 
       <Modal title="Create Character" isActive={isActive} onClose={() => setIsActive(false)}>
         <div className="flex flex-col items-center justify-center gap-4">
-          <img
-            className="h-28 w-28 flex-shrink-0 rounded-full object-cover"
-            src={character.image ? character.image : '/img/placeholder.png'}
-            onError={({ currentTarget }) => {
-              currentTarget.onerror = null
-              currentTarget.src = '/img/placeholder.png'
-            }}
-          />
+          {character.image ? (
+            <img
+              className="h-36 w-36 flex-shrink-0 rounded-full object-cover"
+              src={character.image ? character.image : '/img/placeholder.png'}
+              onError={({ currentTarget }) => {
+                currentTarget.onerror = null
+                currentTarget.src = '/img/placeholder.png'
+              }}
+            />
+          ) : (
+            <div className="h-36 w-36 flex-shrink-0 rounded-full object-cover">
+              <Avatar
+                title={false}
+                size={150}
+                variant="beam"
+                name="chatgenie"
+                colors={['#362D5C', '#8B7099', '#76C5DD', '#CD9AFE', '#E2B42B']}
+              />
+            </div>
+          )}
           <div className="flex w-full flex-col gap-1">
             <label className="text-xs text-zinc-400">Name</label>
             <input
