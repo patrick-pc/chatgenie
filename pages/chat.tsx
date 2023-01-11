@@ -29,10 +29,11 @@ export default function Character() {
   const [isGenerating, setIsGenerating] = useState(false)
 
   useEffect(() => {
-    if (!characterId) return
+    if (!characterId && !user) return
 
     getCharacter()
-  }, [characterId])
+    getConversation()
+  }, [characterId, user])
 
   const getCharacter = async () => {
     try {
@@ -49,12 +50,6 @@ export default function Character() {
       console.log(error)
     }
   }
-
-  useEffect(() => {
-    if (!user) return
-
-    getConversation()
-  }, [user])
 
   const getConversation = async () => {
     try {
