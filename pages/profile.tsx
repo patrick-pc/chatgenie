@@ -1,3 +1,4 @@
+import { Avatar } from '@boringer-avatars/react'
 import { ChevronLeftIcon, PencilSquareIcon } from '@heroicons/react/24/outline'
 import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs'
 import { Orbit } from '@uiball/loaders'
@@ -86,7 +87,17 @@ export default function Profile() {
           </div>
 
           <div className="flex w-full flex-col items-center justify-center gap-8">
-            <img className="h-28 w-28 rounded-full" src={profile.avatar_url} />
+            {!profile.avatar_url ? (
+              <img className="h-28 w-28 rounded-full" src={profile.avatar_url} />
+            ) : (
+              <Avatar
+                title={false}
+                size={110}
+                variant="marble"
+                name={profile.username}
+                colors={['#362D5C', '#8B7099', '#76C5DD', '#CD9AFE', '#E2B42B']}
+              />
+            )}
             <div className="text-center">
               <p className="text-xl font-medium">{profile.name}</p>
               <p className="text-indigo-400">@{profile.username}</p>

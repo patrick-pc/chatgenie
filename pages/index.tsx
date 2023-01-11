@@ -1,4 +1,5 @@
 import { ArrowLongRightIcon } from '@heroicons/react/24/outline'
+import { Avatar } from '@boringer-avatars/react'
 import { toast } from 'react-hot-toast'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
@@ -214,14 +215,27 @@ export default function Home() {
                         href={`/chat?characterId=${character.id}`}
                         className="flex flex-col items-center justify-center gap-2 text-center"
                       >
-                        <img
-                          className="squircle h-36 w-36 flex-shrink-0 object-cover"
-                          src={character.image ? character.image : '/img/placeholder.png'}
-                          onError={({ currentTarget }) => {
-                            currentTarget.onerror = null
-                            currentTarget.src = '/img/placeholder.png'
-                          }}
-                        />
+                        {character.image ? (
+                          <img
+                            className="squircle h-36 w-36 flex-shrink-0 object-cover"
+                            src={character.image ? character.image : '/img/placeholder.png'}
+                            onError={({ currentTarget }) => {
+                              currentTarget.onerror = null
+                              currentTarget.src = '/img/placeholder.png'
+                            }}
+                          />
+                        ) : (
+                          <div className="squircle h-36 w-36 flex-shrink-0 object-cover">
+                            <Avatar
+                              title={false}
+                              size={150}
+                              variant="beam"
+                              name={character.id}
+                              square={true}
+                              colors={['#362D5C', '#8B7099', '#76C5DD', '#CD9AFE', '#E2B42B']}
+                            />
+                          </div>
+                        )}
                         <p className="text-sm font-medium text-zinc-400">{character.name}</p>
                       </Link>
                     )
@@ -240,10 +254,27 @@ export default function Home() {
                       href={`/chat?characterId=${character.id}`}
                       className="flex flex-col items-center justify-center gap-2 text-center"
                     >
-                      <img
-                        className="squircle h-36 w-36 flex-shrink-0 object-cover"
-                        src={character.image}
-                      />
+                      {character.image ? (
+                        <img
+                          className="squircle h-36 w-36 flex-shrink-0 object-cover"
+                          src={character.image ? character.image : '/img/placeholder.png'}
+                          onError={({ currentTarget }) => {
+                            currentTarget.onerror = null
+                            currentTarget.src = '/img/placeholder.png'
+                          }}
+                        />
+                      ) : (
+                        <div className="squircle h-36 w-36 flex-shrink-0 object-cover">
+                          <Avatar
+                            title={false}
+                            size={150}
+                            variant="beam"
+                            name={character.id}
+                            square={true}
+                            colors={['#362D5C', '#8B7099', '#76C5DD', '#CD9AFE', '#E2B42B']}
+                          />
+                        </div>
+                      )}
                       <p className="text-sm font-medium text-zinc-400">{character.name}</p>
                     </Link>
                   )

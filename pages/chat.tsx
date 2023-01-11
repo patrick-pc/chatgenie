@@ -1,3 +1,4 @@
+import { Avatar } from '@boringer-avatars/react'
 import { ChevronLeftIcon, ShareIcon, PaperAirplaneIcon } from '@heroicons/react/24/outline'
 import { DotPulse } from '@uiball/loaders'
 import { useEffect, useState } from 'react'
@@ -14,6 +15,7 @@ export default function Character() {
   const [message, setMessage] = useState('')
   const [conversation, setConversation] = useState([] as any)
   const [character, setCharacter] = useState({
+    id: '',
     name: '',
     user_id: '',
     description: '',
@@ -174,14 +176,26 @@ export default function Character() {
               <ChevronLeftIcon className="h-6 w-6 cursor-pointer stroke-2" />
             </Link>
             <div className="flex items-center gap-2">
-              <img
-                className="h-10 w-10 flex-shrink-0 rounded-full object-cover"
-                src={character.image ? (character.image as string) : '/img/placeholder.png'}
-                onError={({ currentTarget }) => {
-                  currentTarget.onerror = null
-                  currentTarget.src = '/img/placeholder.png'
-                }}
-              />
+              {character.image ? (
+                <img
+                  className="h-10 w-10 flex-shrink-0 rounded-full object-cover"
+                  src={character.image ? character.image : '/img/placeholder.png'}
+                  onError={({ currentTarget }) => {
+                    currentTarget.onerror = null
+                    currentTarget.src = '/img/placeholder.png'
+                  }}
+                />
+              ) : (
+                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full object-cover">
+                  <Avatar
+                    title={false}
+                    size={35}
+                    variant="beam"
+                    name={character.id}
+                    colors={['#362D5C', '#8B7099', '#76C5DD', '#CD9AFE', '#E2B42B']}
+                  />
+                </div>
+              )}
               <p className="font-medium">{character.name}</p>
             </div>
             <button>
