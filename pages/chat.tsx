@@ -2,20 +2,76 @@ import { ChevronLeftIcon, ShareIcon, PaperAirplaneIcon } from '@heroicons/react/
 import { DotPulse } from '@uiball/loaders'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
+import { useUser } from '@supabase/auth-helpers-react'
 import Head from 'next/head'
 import Link from 'next/link'
 
 export default function Character() {
   const router = useRouter()
-  const { name, description, image } = router.query
+  const user = useUser()
+  const { characterId } = router.query
 
   const [message, setMessage] = useState('')
   const [conversation, setConversation] = useState([] as any)
+  const [character, setCharacter] = useState({
+    name: '',
+    user_id: '',
+    description: '',
+    image: '',
+    visibility: '',
+  })
   const [characterMessage, setCharacterMessage] = useState({
-    sender: name,
+    sender: '',
     message: '',
   })
   const [isGenerating, setIsGenerating] = useState(false)
+
+  useEffect(() => {
+    if (!characterId) return
+
+    getCharacter()
+  }, [characterId])
+
+  const getCharacter = async () => {
+    try {
+      const response = await fetch(`/api/characters/${characterId}`, {
+        method: 'GET',
+        headers: new Headers({
+          'content-type': 'application/json',
+        }),
+      })
+
+      const data = await response.json()
+      setCharacter(data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    if (!user) return
+
+    getConversation()
+  }, [user])
+
+  const getConversation = async () => {
+    try {
+      const response = await fetch(
+        `/api/conversations?characterId=${characterId}&userId=${user.id}`,
+        {
+          method: 'GET',
+          headers: new Headers({
+            'content-type': 'application/json',
+          }),
+        }
+      )
+
+      const data = await response.json()
+      setConversation(data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   useEffect(() => {
     if (!characterMessage.message) return
@@ -26,13 +82,33 @@ export default function Character() {
   const sendMessage = async () => {
     if (!message) return
 
-    setMessage('')
-    const myMessage = {
-      sender: 'Guest',
+    const content = {
+      sender: 'Me',
       message: message,
-      description: '',
     }
-    setConversation([...conversation, myMessage])
+    setConversation([...conversation, content])
+    setMessage('')
+
+    if (user) {
+      try {
+        const response = await fetch('/api/conversations', {
+          method: 'POST',
+          body: JSON.stringify({
+            characterId: characterId,
+            userId: user.id,
+            sender: 'Me',
+            message,
+          }),
+          headers: new Headers({
+            'content-type': 'application/json',
+          }),
+        })
+
+        const data = await response.json()
+      } catch (error) {
+        console.log(error)
+      }
+    }
 
     setTimeout(async () => {
       setIsGenerating(true)
@@ -42,17 +118,43 @@ export default function Character() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name, message, description, conversation }),
+        body: JSON.stringify({
+          name: character.name,
+          description: character.description,
+          message,
+          conversation,
+        }),
       })
 
       const data = await response.json()
       const { output } = data
 
       setCharacterMessage({
-        sender: name,
+        sender: character.name,
         message: output.text.trim(),
       })
       setIsGenerating(false)
+
+      if (user) {
+        try {
+          const response = await fetch('/api/conversations', {
+            method: 'POST',
+            body: JSON.stringify({
+              characterId: characterId,
+              sender: character.name,
+              userId: user.id,
+              message: output.text.trim(),
+            }),
+            headers: new Headers({
+              'content-type': 'application/json',
+            }),
+          })
+
+          const data = await response.json()
+        } catch (error) {
+          console.log(error)
+        }
+      }
     }, 800)
   }
 
@@ -74,32 +176,40 @@ export default function Character() {
             <div className="flex items-center gap-2">
               <img
                 className="h-10 w-10 flex-shrink-0 rounded-full object-cover"
-                src={image ? (image as string) : '/img/placeholder.png'}
+                src={character.image ? (character.image as string) : '/img/placeholder.png'}
                 onError={({ currentTarget }) => {
                   currentTarget.onerror = null
                   currentTarget.src = '/img/placeholder.png'
                 }}
               />
-              <p className="font-medium">{name}</p>
+              <p className="font-medium">{character.name}</p>
             </div>
             <button>
               <ShareIcon className="h-5 w-5 stroke-2" />
             </button>
           </div>
-          <div className="flex h-[500px] w-full max-w-md flex-col items-center justify-end gap-4 rounded-2xl border border-[#212325] p-4">
+          <div className="relative flex h-[500px] w-full max-w-md flex-col items-center justify-end gap-4 rounded-2xl border border-[#212325] p-4">
+            {!user && (
+              <div className="absolute top-0 w-full select-none rounded-t-2xl bg-yellow-500/10 p-2 text-center text-sm font-light text-yellow-600">
+                <Link href="/signin">
+                  <p className="inline underline">Sign in</p>
+                </Link>{' '}
+                to save conversation.
+              </div>
+            )}
             <div className="flex w-full flex-col-reverse gap-2 overflow-y-auto">
               <div className="max-w-40">
                 {conversation?.map((conv: any, i: number) => {
                   return (
                     <div
                       className={`flex items-center p-2 ${
-                        conv.sender === 'Guest' ? 'justify-end' : 'justify-start'
+                        conv.sender === 'Me' ? 'justify-end' : 'justify-start'
                       }`}
                       key={i}
                     >
                       <div
                         className={`max-w-[18rem] rounded-2xl p-4 ${
-                          conv.sender === 'Guest' ? 'bg-indigo-400' : 'bg-[#212325]'
+                          conv.sender === 'Me' ? 'bg-indigo-400' : 'bg-[#212325]'
                         }`}
                       >
                         <p className="text-sm md:text-base">{conv.message}</p>
@@ -127,6 +237,7 @@ export default function Character() {
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') sendMessage()
                 }}
+                maxLength={256}
               />
 
               <button
