@@ -86,27 +86,6 @@ export default function Character() {
     setConversation([...conversation, content])
     setMessage('')
 
-    if (user) {
-      try {
-        const response = await fetch('/api/conversations', {
-          method: 'POST',
-          body: JSON.stringify({
-            characterId: characterId,
-            userId: user.id,
-            sender: 'Me',
-            message,
-          }),
-          headers: new Headers({
-            'content-type': 'application/json',
-          }),
-        })
-
-        const data = await response.json()
-      } catch (error) {
-        console.log(error)
-      }
-    }
-
     setTimeout(async () => {
       setIsGenerating(true)
       console.log('Sending message...')
@@ -133,6 +112,25 @@ export default function Character() {
       setIsGenerating(false)
 
       if (user) {
+        try {
+          const response = await fetch('/api/conversations', {
+            method: 'POST',
+            body: JSON.stringify({
+              characterId: characterId,
+              userId: user.id,
+              sender: 'Me',
+              message,
+            }),
+            headers: new Headers({
+              'content-type': 'application/json',
+            }),
+          })
+
+          const data = await response.json()
+        } catch (error) {
+          console.log(error)
+        }
+
         try {
           const response = await fetch('/api/conversations', {
             method: 'POST',

@@ -27,7 +27,7 @@ export default function Home() {
 
   const createCharacter = async () => {
     if (!user) {
-      toast.error('Please login to continue.')
+      toast.error('Please signin to continue.')
       return
     }
 
@@ -256,6 +256,7 @@ export default function Home() {
                 size={150}
                 variant="beam"
                 name="chatgenie"
+                square={false}
                 colors={['#362D5C', '#8B7099', '#76C5DD', '#CD9AFE', '#E2B42B']}
               />
             </div>
