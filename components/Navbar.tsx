@@ -8,7 +8,10 @@ const Navbar = () => {
   return (
     <div className="flex w-full items-center justify-between p-6">
       <Link href="/">
-        <img className="h-8 cursor-pointer" src="/img/logo-256x256.png" />
+        <div className="flex items-center justify-center gap-2">
+          <img className="h-8 cursor-pointer" src="/img/logo.png" />
+          <p className="text-lg font-medium">ChatGenie</p>
+        </div>
       </Link>
       {user ? (
         <Link href="/profile">

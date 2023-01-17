@@ -127,7 +127,7 @@ export default function Home() {
         <title>ChatGenie</title>
         <meta name="description" content="Talk to any character." />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-        <link rel="icon" href="/img/logo-160x160.svg" />
+        <link rel="icon" href="/img/logo.png" />
       </Head>
 
       <Navbar />
