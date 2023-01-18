@@ -143,9 +143,11 @@ export default function Home() {
               <ArrowLongRightIcon className="h-5 w-5" />
             </a>
             <div className="flex flex-col gap-2">
-              <h1 className="text-5xl font-medium md:text-7xl">ChatGenie</h1>
-              <h3 className="text-lg font-extralight text-zinc-400 md:text-xl">
-                Have a conversation with any character
+              <h1 className="text-xl font-medium md:text-5xl">
+                Text and chat with any person, dead or alive
+              </h1>
+              <h3 className="text-lg font-light text-zinc-400 md:text-xl">
+                Have a conversation with any person or any character you like
               </h3>
             </div>
             <button
