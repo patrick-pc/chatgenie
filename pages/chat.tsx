@@ -164,9 +164,9 @@ export default function Character() {
         <link rel="icon" href="/img/logo-160x160.svg" />
       </Head>
 
-      <main className="container mx-auto pt-6 pb-16 md:pt-16">
-        <div className="flex h-full w-full flex-col items-center justify-start gap-4 px-6">
-          <div className="flex w-full max-w-md items-center justify-between">
+      <main className="container mx-auto h-screen pt-6 pb-16 md:pt-16">
+        <div className="flex h-full w-full flex-col items-center justify-start gap-4 px-4">
+          <div className="fixed top-0 flex w-full max-w-2xl items-center justify-between px-4 py-6 md:px-0">
             <Link href="/">
               <ChevronLeftIcon className="h-6 w-6 cursor-pointer stroke-2" />
             </Link>
@@ -197,7 +197,7 @@ export default function Character() {
               <ShareIcon className="h-5 w-5 stroke-2" />
             </button>
           </div>
-          <div className="relative flex h-[500px] w-full max-w-md flex-col items-center justify-end gap-4 rounded-2xl border border-[#212325] p-4">
+          <div className="relative mt-16 mb-8 flex h-full w-full max-w-2xl flex-col items-center justify-end gap-4 rounded-2xl border border-[#212325] md:mt-4">
             {!user && (
               <div className="absolute top-0 w-full select-none rounded-t-2xl bg-yellow-500/10 p-2 text-center text-sm font-light text-yellow-600">
                 <Link href="/signin">
@@ -236,25 +236,27 @@ export default function Character() {
               </div>
             </div>
 
-            <div className="flex w-full gap-2 rounded-full bg-[#212325] p-2">
-              <input
-                className="w-full bg-[#212325] px-4 text-sm focus:outline-none"
-                type="text"
-                placeholder="Type your message here..."
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') sendMessage()
-                }}
-                maxLength={256}
-              />
+            <div className="fixed bottom-0 mb-8 w-full max-w-2xl px-4 md:px-0">
+              <div className="flex w-full gap-2 rounded-full bg-[#212325] p-2">
+                <input
+                  className="w-full bg-[#212325] px-4 text-sm focus:outline-none"
+                  type="text"
+                  placeholder="Say something..."
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') sendMessage()
+                  }}
+                  maxLength={256}
+                />
 
-              <button
-                className="flex items-center justify-center rounded-full bg-indigo-400/25 p-2 text-indigo-400"
-                onClick={sendMessage}
-              >
-                <PaperAirplaneIcon className="h-6 w-6 stroke-2" />
-              </button>
+                <button
+                  className="flex items-center justify-center rounded-full bg-indigo-400/25 p-2 text-indigo-400"
+                  onClick={sendMessage}
+                >
+                  <PaperAirplaneIcon className="h-6 w-6 stroke-2" />
+                </button>
+              </div>
             </div>
           </div>
         </div>

@@ -43,7 +43,7 @@ const Modal = ({ children, title, isActive, onClose, disableClose = false }: Mod
             leaveFrom="opacity-100 translate-y-0 sm:scale-100"
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
-            <div className="w-full transform rounded-t-xl bg-[#212325] px-6 py-8 text-white shadow-xl transition-all sm:max-w-sm sm:rounded-xl">
+            <div className="w-full transform rounded-t-xl bg-[#212325] px-6 py-8 text-white shadow-xl transition-all sm:max-w-lg sm:rounded-xl">
               <div className="mb-6 flex select-none items-center justify-between">
                 <button className="invisible text-zinc-500 transition hover:text-zinc-400">
                   <svg

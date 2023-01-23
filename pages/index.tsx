@@ -27,7 +27,7 @@ export default function Home() {
 
   const createCharacter = async () => {
     if (!user) {
-      toast.error('Please signin to continue.')
+      toast.error('Sign in to continue.')
       return
     }
 
@@ -133,7 +133,7 @@ export default function Home() {
       <Navbar />
       <main className="container mx-auto pt-6 pb-32 md:pt-16">
         <div className="flex h-full w-full flex-col items-center gap-24 px-6">
-          <div className="flex w-full max-w-2xl flex-col items-center justify-center gap-8 text-center">
+          <div className="flex w-full max-w-4xl flex-col items-center justify-center gap-8 text-center">
             <a
               href="https://twitter.com/chatgenie"
               target="_blank"
@@ -143,12 +143,12 @@ export default function Home() {
               <ArrowLongRightIcon className="h-5 w-5" />
             </a>
             <div className="flex flex-col gap-2">
-              <h1 className="text-xl font-medium md:text-5xl">
-                Text and chat with any person, dead or alive
+              <h1 className="text-3xl font-medium md:text-6xl">
+                Text and chat with any character, dead or alive, real or made up
               </h1>
-              <h3 className="text-lg font-light text-zinc-400 md:text-xl">
+              {/* <h3 className="text-lg font-light text-zinc-400 md:text-xl">
                 Have a conversation with any person or any character you like
-              </h3>
+              </h3> */}
             </div>
             <button
               className="mt-4 rounded-lg border border-indigo-300 bg-indigo-600/10 px-6 py-3 text-indigo-400 transition"
@@ -158,11 +158,11 @@ export default function Home() {
             </button>
           </div>
 
-          <div className="flex w-full max-w-2xl flex-col gap-12">
+          <div className="flex w-full max-w-4xl flex-col gap-12">
             {createdCharaters?.length > 0 && (
               <div className="flex flex-col gap-8">
                 <h3 className="text-xl font-medium">Created</h3>
-                <div className="grid grid-cols-2 place-items-center gap-8 md:grid-cols-3 lg:grid-cols-4">
+                <div className="grid grid-cols-2 place-items-center gap-8 md:grid-cols-4 lg:grid-cols-5">
                   {createdCharaters.map((character: any, i: number) => {
                     return (
                       <Link
@@ -185,7 +185,7 @@ export default function Home() {
                               title={false}
                               size={150}
                               variant="beam"
-                              name={character.id}
+                              name={character.name}
                               square={true}
                               colors={['#362D5C', '#8B7099', '#76C5DD', '#CD9AFE', '#E2B42B']}
                             />
@@ -200,8 +200,8 @@ export default function Home() {
             )}
 
             <div className="flex flex-col gap-8">
-              <h3 className="text-xl font-medium">Discover</h3>
-              <div className="grid grid-cols-2 place-items-center gap-8 md:grid-cols-3 lg:grid-cols-4">
+              <h3 className="text-xl font-medium">Characters</h3>
+              <div className="grid grid-cols-2 place-items-center gap-8 md:grid-cols-4 lg:grid-cols-5">
                 {featuredCharacters.map((character, i) => {
                   return (
                     <Link
@@ -224,7 +224,7 @@ export default function Home() {
                             title={false}
                             size={150}
                             variant="beam"
-                            name={character.id}
+                            name={character.name}
                             square={true}
                             colors={['#362D5C', '#8B7099', '#76C5DD', '#CD9AFE', '#E2B42B']}
                           />
@@ -254,7 +254,7 @@ export default function Home() {
           ) : (
             <div className="h-36 w-36 flex-shrink-0 rounded-full object-cover">
               <Avatar
-                title={false}
+                title={true}
                 size={150}
                 variant="beam"
                 name="chatgenie"

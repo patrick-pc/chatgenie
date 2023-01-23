@@ -16,7 +16,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           characterQuery.limit(12)
         } else {
           characterQuery.eq('visibility', 'public')
-          characterQuery.limit(16)
+          characterQuery.limit(40)
         }
         characterQuery.order('created_at', { ascending: false })
 
