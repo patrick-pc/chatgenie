@@ -197,9 +197,9 @@ export default function Character() {
               <ShareIcon className="h-5 w-5 stroke-2" />
             </button>
           </div>
-          <div className="relative mt-16 mb-8 flex h-full w-full max-w-2xl flex-col items-center justify-end gap-4 rounded-2xl border border-[#212325] md:mt-4">
+          <div className="relative flex h-full w-full max-w-2xl flex-col items-center justify-end gap-4 rounded-2xl pb-8 pt-16 md:pt-8">
             {!user && (
-              <div className="absolute top-0 w-full select-none rounded-t-2xl bg-yellow-500/10 p-2 text-center text-sm font-light text-yellow-600">
+              <div className="absolute top-5 w-full select-none rounded-lg bg-yellow-500/10 p-2 text-center text-sm font-light text-yellow-600">
                 <Link href="/signin">
                   <p className="inline underline">Sign in</p>
                 </Link>{' '}
