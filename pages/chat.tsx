@@ -166,7 +166,7 @@ export default function Character() {
 
       <main className="container mx-auto h-screen pt-6 pb-16 md:pt-16">
         <div className="flex h-full w-full flex-col items-center justify-start gap-4 px-4">
-          <div className="fixed top-0 flex w-full max-w-2xl items-center justify-between px-4 py-6 md:px-0">
+          <div className="fixed top-0 z-50 flex w-full max-w-2xl items-center justify-between bg-[#131517] px-4 py-6 md:px-0">
             <Link href="/">
               <ChevronLeftIcon className="h-6 w-6 cursor-pointer stroke-2" />
             </Link>
@@ -199,7 +199,7 @@ export default function Character() {
           </div>
           <div className="relative flex h-full w-full max-w-2xl flex-col items-center justify-end gap-4 rounded-2xl pb-8 pt-16 md:pt-8">
             {!user && (
-              <div className="absolute top-5 w-full select-none rounded-lg bg-yellow-500/10 p-2 text-center text-sm font-light text-yellow-600">
+              <div className="absolute top-6 w-full select-none rounded-lg bg-yellow-500/10 p-2 text-center text-sm font-light text-yellow-600">
                 <Link href="/signin">
                   <p className="inline underline">Sign in</p>
                 </Link>{' '}
