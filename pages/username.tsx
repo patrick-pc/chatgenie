@@ -20,6 +20,19 @@ export default function Username() {
 
     setIsLoading(true)
     try {
+      const { data: profileSelect, error: profileError } = await supabase
+        .from('profiles')
+        .select('id, name, username')
+        .eq('username', username)
+        .single()
+
+      if (profileError) throw profileError
+
+      if (profileSelect.username) {
+        toast.error('Username already taken!')
+        return
+      }
+
       const { data, error } = await supabase
         .from('profiles')
         .update({ username, updated_at: new Date().toISOString() })
@@ -77,25 +90,25 @@ export default function Username() {
   )
 }
 
-export const getServerSideProps = async (ctx) => {
-  const supabase = createServerSupabaseClient(ctx)
-  const {
-    data: { session },
-  } = await supabase.auth.getSession()
+// export const getServerSideProps = async (ctx) => {
+//   const supabase = createServerSupabaseClient(ctx)
+//   const {
+//     data: { session },
+//   } = await supabase.auth.getSession()
 
-  if (!session) {
-    return {
-      redirect: {
-        destination: '/signin',
-        permanent: false,
-      },
-    }
-  }
+//   if (!session) {
+//     return {
+//       redirect: {
+//         destination: '/signin',
+//         permanent: false,
+//       },
+//     }
+//   }
 
-  return {
-    props: {
-      session,
-      user: session.user,
-    },
-  }
-}
+//   return {
+//     props: {
+//       session,
+//       user: session.user,
+//     },
+//   }
+// }
