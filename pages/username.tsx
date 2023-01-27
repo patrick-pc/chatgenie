@@ -90,25 +90,25 @@ export default function Username() {
   )
 }
 
-// export const getServerSideProps = async (ctx) => {
-//   const supabase = createServerSupabaseClient(ctx)
-//   const {
-//     data: { session },
-//   } = await supabase.auth.getSession()
+export const getServerSideProps = async (ctx) => {
+  const supabase = createServerSupabaseClient(ctx)
+  const {
+    data: { session },
+  } = await supabase.auth.getSession()
 
-//   if (!session) {
-//     return {
-//       redirect: {
-//         destination: '/signin',
-//         permanent: false,
-//       },
-//     }
-//   }
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/signin',
+        permanent: false,
+      },
+    }
+  }
 
-//   return {
-//     props: {
-//       session,
-//       user: session.user,
-//     },
-//   }
-// }
+  return {
+    props: {
+      session,
+      user: session.user,
+    },
+  }
+}
