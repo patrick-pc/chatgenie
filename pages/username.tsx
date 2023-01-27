@@ -26,9 +26,7 @@ export default function Username() {
         .eq('username', username)
         .single()
 
-      if (profileError) throw profileError
-
-      if (profileSelect.username) {
+      if (profileSelect?.username) {
         toast.error('Username already taken!')
         return
       }
