@@ -6,6 +6,7 @@ import { useRouter } from 'next/router'
 import { useUser } from '@supabase/auth-helpers-react'
 import Head from 'next/head'
 import Link from 'next/link'
+import { toast } from 'react-hot-toast'
 
 export default function Character() {
   const router = useRouter()
@@ -36,6 +37,8 @@ export default function Character() {
   }, [characterId, user])
 
   const getCharacter = async () => {
+    if (!characterId) return
+
     try {
       const response = await fetch(`/api/characters/${characterId}`, {
         method: 'GET',
@@ -52,6 +55,8 @@ export default function Character() {
   }
 
   const getConversation = async () => {
+    if (!user) return
+
     try {
       const response = await fetch(
         `/api/conversations?characterId=${characterId}&userId=${user.id}`,
@@ -110,6 +115,8 @@ export default function Character() {
     setTimeout(async () => {
       setIsGenerating(true)
       console.log('Sending message...')
+
+      let output
       const response = await fetch('/api/generate', {
         method: 'POST',
         headers: {
@@ -123,13 +130,18 @@ export default function Character() {
         }),
       })
 
-      const data = await response.json()
-      const { output } = data
+      if (response.status === 200) {
+        const data = await response.json()
+        output = data.output
 
-      setCharacterMessage({
-        sender: character.name,
-        message: output.text.trim(),
-      })
+        setCharacterMessage({
+          sender: character.name,
+          message: output.text.trim(),
+        })
+      } else {
+        setConversation((previousArr) => previousArr.slice(0, -1))
+        toast.error('Something went wrong. Please try again.')
+      }
       setIsGenerating(false)
 
       if (user) {

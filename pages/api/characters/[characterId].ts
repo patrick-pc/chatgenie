@@ -14,7 +14,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         if (error) throw error
 
-        return res.status(400).json(data)
+        return res.status(200).json(data)
       } catch (error) {
         return res.status(400).send(error.message)
       }
