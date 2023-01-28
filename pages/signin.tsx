@@ -1,4 +1,5 @@
 import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs'
+import { Ring } from '@uiball/loaders'
 import { useState } from 'react'
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import Head from 'next/head'
@@ -43,14 +44,15 @@ export default function SignIn() {
 
   if (submitted) {
     return (
-      <div className="flex h-screen w-full flex-col items-center justify-center gap-2 px-6">
-        <h4 className="text-xl font-medium">Please check your email to sign in</h4>
-        <div className="flex gap-1">
+      <div className="flex h-screen w-full flex-col items-center justify-center gap-8 px-6">
+        <h4 className="text-xl font-medium">Redirecting to Google</h4>
+        <Ring size={40} color="#818cf8" />
+        {/* <div className="flex gap-1">
           <p className="text-zinc-400">Didn't receive an email?</p>
           <button className="text-indigo-400" onClick={signIn}>
             Try again
           </button>
-        </div>
+        </div> */}
       </div>
     )
   }
@@ -59,9 +61,12 @@ export default function SignIn() {
     <>
       <Head>
         <title>ChatGenie</title>
-        <meta name="description" content="Talk to any character." />
+        <meta
+          name="description"
+          content="Text and chat with any character, dead or alive, real or made up."
+        />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-        <link rel="icon" href="/img/logo-160x160.svg" />
+        <link rel="icon" href="/img/logo.png" />
       </Head>
 
       <div className="flex h-screen w-full flex-col items-center justify-center gap-4 px-6">

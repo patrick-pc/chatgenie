@@ -57,9 +57,12 @@ export default function Username() {
     <>
       <Head>
         <title>ChatGenie</title>
-        <meta name="description" content="Talk to any character." />
+        <meta
+          name="description"
+          content="Text and chat with any character, dead or alive, real or made up."
+        />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-        <link rel="icon" href="/img/logo-160x160.svg" />
+        <link rel="icon" href="/img/logo.png" />
       </Head>
 
       <div className="flex h-screen w-full flex-col items-center justify-center gap-4 px-6">

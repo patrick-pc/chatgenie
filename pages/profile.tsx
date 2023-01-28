@@ -69,9 +69,12 @@ export default function Profile() {
     <>
       <Head>
         <title>ChatGenie</title>
-        <meta name="description" content="Talk to any character." />
+        <meta
+          name="description"
+          content="Text and chat with any character, dead or alive, real or made up."
+        />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-        <link rel="icon" href="/img/logo-160x160.svg" />
+        <link rel="icon" href="/img/logo.png" />
       </Head>
 
       <main className="container mx-auto pt-6 pb-16 md:pt-16">
