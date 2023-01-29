@@ -203,7 +203,7 @@ export default function Home() {
             )}
 
             <div className="flex flex-col gap-8">
-              <h3 className="text-xl font-medium">Characters</h3>
+              <h3 className="text-xl font-medium">Featured</h3>
               <div className="grid grid-cols-2 place-items-center gap-8 md:grid-cols-4 lg:grid-cols-5">
                 {featuredCharacters.map((character, i) => {
                   return (
