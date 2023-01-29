@@ -137,13 +137,23 @@ export default function Home() {
       <main className="container mx-auto pt-6 pb-32 md:pt-16">
         <div className="flex h-full w-full flex-col items-center gap-24 px-6">
           <div className="flex w-full max-w-4xl flex-col items-center justify-center gap-8 text-center">
-            <a
+            {/* <a
               href="https://twitter.com/chatgenie"
               target="_blank"
               className="flex items-center justify-center gap-2 rounded-full border-[.5px] border-zinc-600 bg-[#93959711] py-1 px-4 text-sm"
             >
               Follow us on Twitter
               <ArrowLongRightIcon className="h-5 w-5" />
+            </a> */}
+            <a
+              href="https://www.producthunt.com/posts/chatgenie?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-chatgenie"
+              target="_blank"
+            >
+              <img
+                src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=376775&theme=light"
+                alt="ChatGenie - Talk&#0032;to&#0032;any&#0032;character&#0044;&#0032;dead&#0032;or&#0032;alive&#0044;&#0032;real&#0032;or&#0032;made&#0032;up | Product Hunt"
+                className="h-12"
+              />
             </a>
             <div className="flex flex-col gap-2">
               <h1 className="text-3xl font-medium md:text-6xl">
