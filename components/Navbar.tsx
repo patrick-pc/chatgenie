@@ -13,7 +13,7 @@ const Navbar = () => {
           <p className="text-lg font-medium">ChatGenie</p>
         </div>
       </Link>
-      {user ? (
+      {/* {user ? (
         <Link href="/profile">
           <UserIcon className="h-6 w-6" />
         </Link>
@@ -21,7 +21,7 @@ const Navbar = () => {
         <Link href="/signin">
           <button>Sign In</button>
         </Link>
-      )}
+      )} */}
     </div>
   )
 }

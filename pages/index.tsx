@@ -163,15 +163,19 @@ export default function Home() {
                 Have a conversation with any person or any character you like
               </h3> */}
             </div>
-            <button
+            {/* <button
               className="mt-4 rounded-lg border border-indigo-300 bg-indigo-600/10 px-6 py-3 text-indigo-400 transition"
               onClick={() => setIsActive(true)}
             >
               Create Character
-            </button>
+            </button> */}
+            <p>
+              This project is discontinued. I'm running out of fund to continue working on this
+              project.
+            </p>
           </div>
 
-          <div className="flex w-full max-w-4xl flex-col gap-12">
+          {/* <div className="flex w-full max-w-4xl flex-col gap-12">
             {createdCharaters?.length > 0 && (
               <div className="flex flex-col gap-8">
                 <h3 className="text-xl font-medium">Created</h3>
@@ -249,7 +253,7 @@ export default function Home() {
                 })}
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </main>
 
